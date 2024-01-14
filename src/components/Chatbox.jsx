@@ -5,7 +5,7 @@ const Chatbox = ({ messages, pairedUser }) => {
 
   return (
     <div>
-      <h4>
+      <h4 id="wait-message">
         {pairedUser ? `You are paired with user ${pairedUser}` : waitMessage}
       </h4>
       <ul id="chat-box">
