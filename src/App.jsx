@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
+import Chatbox from './components/Chatbox';
+import './App.css';
 
 const socket = io('http://localhost:3001');
 
 function App() {
   const [messages, setMessages] = useState([]);
-  const [message, setMessage] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [pairedUser, setPairedUser] = useState(null);
 
   useEffect(() => {
@@ -25,28 +27,31 @@ function App() {
   }, [messages]);
 
   const sendMessage = () => {
-    socket.emit('message', message);
-    setMessages([...messages, { from: 'me', text: message }]);
-    setMessage('');
+    socket.emit('message', inputValue);
+    setMessages([...messages, { from: 'me', text: inputValue }]);
+    setInputValue('');
   };
 
   return (
     <div>
-      <h2>{pairedUser ? `You are paired with user ${pairedUser}` : 'Waiting for a partner'}</h2>
-      <ul>
-        {messages.map((msg, index) => (
-          <li key={index}>
-            {msg.from === 'me' ? 'You: ' : 'Stranger: '}
-            {msg.text}
-          </li>
-        ))}
-      </ul>
-      <input
-        type="text"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
+      <h1 id="page-title">Stranger Chat</h1>
+      <Chatbox
+        messages={messages}
+        pairedUser={pairedUser}
       />
-      <button onClick={sendMessage} disabled={!pairedUser}>Send</button>
+      <div id="chat-input">
+        <textarea
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          placeholder="Type your message..."
+        />
+        <button
+          onClick={sendMessage}
+          disabled={!pairedUser || !inputValue.trim()}
+        >
+          Send
+        </button>
+      </div>
     </div>
   );
 }
