@@ -5,17 +5,18 @@ const Chatbox = ({ messages, pairedUser }) => {
 
   return (
     <div>
-      <ul>
-        {messages.map((msg, index) => (
-          <li key={index}>
-            {msg.from === 'me' ? 'You: ' : 'Stranger: '}
-            {msg.text}
-          </li>
-        ))}
-      </ul>
       <h4>
         {pairedUser ? `You are paired with user ${pairedUser}` : waitMessage}
       </h4>
+      <ul id="chat-box">
+        {messages.map((msg, index) => (
+          <li key={index} className="message-container">
+            <div className={`message ${msg.from}`}>
+              <span className="message-text">{msg.text}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 };
