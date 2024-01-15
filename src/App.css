@@ -98,7 +98,7 @@ textarea {
   margin-right: 10px;
 }
 
-button {
+.green-button {
   padding: 10px;
   background-color: #4caf50;
   color: #fff;
@@ -107,7 +107,12 @@ button {
   cursor: pointer;
 }
 
-button:disabled {
+.green-button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+#leave-chat {
+  margin-top: 10px;
+  cursor: pointer;
 }

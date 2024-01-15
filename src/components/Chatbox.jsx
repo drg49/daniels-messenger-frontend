@@ -16,7 +16,10 @@ const Chatbox = ({ messages, pairedUser, randomColor, disconnectAlert }) => {
       <p id="disconnect">{disconnectAlert}</p>
       {disconnectAlert ? (
         <div id="find-a-stranger">
-          <button onClick={() => window.location.reload()}>
+          <button
+            className="green-button"
+            onClick={() => window.location.reload()}
+          >
             Find a stranger
           </button>
         </div>

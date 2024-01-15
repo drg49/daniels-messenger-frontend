@@ -56,6 +56,7 @@ function App() {
         <button
           onClick={sendMessage}
           disabled={!pairedUser || !inputValue.trim()}
+          className='green-button'
         >
           Send
         </button>
