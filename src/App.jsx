@@ -38,6 +38,9 @@ function App() {
     setInputValue('');
   };
 
+  // TODO: Show a notification that says "User is typing..."
+  // We want to notify the user that their chat partner is typing
+
   return (
     <main>
       <h1 id="page-title">Stranger Chat</h1>
@@ -51,6 +54,12 @@ function App() {
         <textarea
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault(); // Prevents a newline from being added to the textarea
+              sendMessage();
+            }
+          }}
           placeholder="Type your message..."
         />
         <button
