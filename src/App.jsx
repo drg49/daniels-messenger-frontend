@@ -11,6 +11,7 @@ function App() {
   const [inputValue, setInputValue] = useState('');
   const [pairedUser, setPairedUser] = useState(null);
   const [randomColor, setRandomColor] = useState('#000000');
+  const [disconnectAlert, setDisconnectAlert] = useState('');
 
   useEffect(() => {
     // User has been paired:
@@ -27,7 +28,7 @@ function App() {
     // Your partner has been disconnected:
     socket.on('disconnected', () => {
       setPairedUser(null);
-      console.log('Your partner has disconnected');
+      setDisconnectAlert('Your partner has disconnected');
     });
   }, [messages]);
 
@@ -44,6 +45,7 @@ function App() {
         messages={messages}
         pairedUser={pairedUser}
         randomColor={randomColor}
+        disconnectAlert={disconnectAlert}
       />
       <div id="chat-input">
         <textarea

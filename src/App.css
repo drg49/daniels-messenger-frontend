@@ -15,7 +15,7 @@ main {
   color: green;
 }
 
-#page-title, #wait-message {
+#page-title, #wait-message, #disconnect, #find-a-stranger {
   text-align: center;
 }
 

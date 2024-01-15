@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
+import WaitMessage from "./WaitMessage";
 
-const Chatbox = ({ messages, pairedUser, randomColor }) => {
+const Chatbox = ({ messages, pairedUser, randomColor, disconnectAlert }) => {
   const waitMessage = "Please wait while we connect you with a stranger...";
 
   const chatBoxRef = useRef();
@@ -12,16 +13,20 @@ const Chatbox = ({ messages, pairedUser, randomColor }) => {
 
   return (
     <div id="chat-wrapper">
-      <h4 id="wait-message">
-        {pairedUser ? (
-          <>
-            You are paired with{" "}
-            <span style={{ color: randomColor }}>{pairedUser}</span>
-          </>
-        ) : (
-          waitMessage
-        )}
-      </h4>
+      <p id="disconnect">{disconnectAlert}</p>
+      {disconnectAlert ? (
+        <div id="find-a-stranger">
+          <button onClick={() => window.location.reload()}>
+            Find a stranger
+          </button>
+        </div>
+      ) : (
+        <WaitMessage
+          pairedUser={pairedUser}
+          randomColor={randomColor}
+          waitMessage={waitMessage}
+        />
+      )}
       <ul id="chat-box" ref={chatBoxRef}>
         {messages.map((msg, index) => (
           <li key={index} className="message-container">
