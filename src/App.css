@@ -2,6 +2,12 @@
 
 body {
   margin: 0;
+  background-color: whitesmoke;
+}
+
+main {
+  max-width: 778px;
+  margin: auto;
 }
 
 #page-title {
@@ -24,14 +30,23 @@ body {
   margin: 0 auto;
 }
 
+#chat-wrapper {
+  max-width: 778px;
+  margin: 0 auto;
+}
+
 #chat-box {
   padding: 0px 0px 8px 0px;
+  min-height: 8vh;
   max-height: 50vh;
   overflow-y: auto;
   scrollbar-width: thin; /* For Firefox */
   scrollbar-color: #ddd #f4f4f4; /* For Firefox */
-  max-width: 778px;
-  margin: 0 auto;
+  background-color: white;
+}
+
+#chat-input, #chat-box {
+  border-radius: 3px;
 }
 
 #chat-box::-webkit-scrollbar {
@@ -64,13 +79,13 @@ body {
 
 .message.me {
 	align-self: flex-end;
-	background-color: #efefef;
+	background-color: cornflowerblue;
+  color: #fff;
 }
 
 .message.stranger {
   align-self: flex-start;
-	background-color: cornflowerblue;
-	color: #fff;
+  background-color: #efefef;
 }
 
 textarea {
