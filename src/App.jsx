@@ -12,6 +12,8 @@ function App() {
   const [pairedUser, setPairedUser] = useState(null);
   const [randomColor, setRandomColor] = useState('#000000');
   const [disconnectAlert, setDisconnectAlert] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const [typingTimeout, setTypingTimeout] = useState(null);
 
   useEffect(() => {
     // User has been paired:
@@ -32,14 +34,47 @@ function App() {
     });
   }, [messages]);
 
+  useEffect(() => {
+    // Your partner is typing:
+    socket.on('typing', (isTyping) => {
+      setIsTyping(isTyping);
+
+      if (!isTyping) {
+        // If not typing, clear the timeout
+        clearTimeout(typingTimeout);
+        setTypingTimeout(null);
+      }
+    });
+
+    return () => {
+      // Cleanup when component unmounts
+      socket.off('typing');
+      clearTimeout(typingTimeout);
+    };
+  }, [typingTimeout]);
+
   const sendMessage = () => {
+    socket.emit('typing', false); // Notify that the user has stopped typing
     socket.emit('message', inputValue);
     setMessages([...messages, { from: 'me', text: inputValue }]);
     setInputValue('');
-  };
+  };  
 
-  // TODO: Show a notification that says "User is typing..."
-  // We want to notify the user that their chat partner is typing
+  const handleTyping = () => {
+    if (typingTimeout) {
+      // If already typing, clear the existing timeout
+      clearTimeout(typingTimeout);
+    }
+
+    // Notify that the user is typing after a short delay
+    socket.emit('typing', true);
+    
+    // Set a new timeout to hide the notification after 3 seconds
+    setTypingTimeout(setTimeout(() => {
+      socket.emit('typing', false);
+      setTypingTimeout(null);
+    }, 3000));
+  };
 
   return (
     <main>
@@ -50,10 +85,14 @@ function App() {
         randomColor={randomColor}
         disconnectAlert={disconnectAlert}
       />
+      {isTyping && <div className="typing-notification">Stranger is typing...</div>}
       <div id="chat-input">
         <textarea
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+            handleTyping()
+          }}
           onKeyDown={(e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
               e.preventDefault(); // Prevents a newline from being added to the textarea
