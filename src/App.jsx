@@ -4,7 +4,7 @@ import Chatbox from './components/Chatbox';
 import './App.css';
 import { generateUsername, getRandomColor } from './assets/data';
 
-const socket = io('http://localhost:3001');
+const socket = io(process.env.REACT_APP_API_URL);
 
 function App() {
   const [messages, setMessages] = useState([]);
