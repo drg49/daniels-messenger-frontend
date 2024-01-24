@@ -58,7 +58,7 @@ function App() {
     socket.emit('message', inputValue);
     setMessages([...messages, { from: 'me', text: inputValue }]);
     setInputValue('');
-  };  
+  };
 
   const handleTyping = () => {
     if (typingTimeout) {
@@ -68,7 +68,7 @@ function App() {
 
     // Notify that the user is typing after a short delay
     socket.emit('typing', true);
-    
+
     // Set a new timeout to hide the notification after 3 seconds
     setTypingTimeout(setTimeout(() => {
       socket.emit('typing', false);
@@ -85,7 +85,12 @@ function App() {
         randomColor={randomColor}
         disconnectAlert={disconnectAlert}
       />
-      {isTyping && <div className="typing-notification">Stranger is typing...</div>}
+      <div
+        className="typing-notification"
+        style={{ visibility: isTyping ? 'visible' : 'hidden' }}
+      >
+        Stranger is typing
+      </div>
       <div id="chat-input">
         <textarea
           value={inputValue}
