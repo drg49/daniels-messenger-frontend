@@ -30,7 +30,7 @@ function App() {
     // Your partner has been disconnected:
     socket.on('disconnected', () => {
       setPairedUser(null);
-      setDisconnectAlert('Your partner has disconnected');
+      setDisconnectAlert('User has disconnected');
     });
   }, [messages]);
 
@@ -78,7 +78,8 @@ function App() {
 
   return (
     <main>
-      <h1 id="page-title">Stranger Chat</h1>
+      <h1 id="page-title">Daniel's Messenger</h1>
+      <h5 id="created-by">Created by Daniel Gavin</h5>
       <Chatbox
         messages={messages}
         pairedUser={pairedUser}
@@ -89,7 +90,7 @@ function App() {
         className="typing-notification"
         style={{ visibility: isTyping ? 'visible' : 'hidden' }}
       >
-        Stranger is typing
+        User is typing
       </div>
       <div id="chat-input">
         <textarea

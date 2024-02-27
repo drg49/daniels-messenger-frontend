@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import WaitMessage from "./WaitMessage";
 
 const Chatbox = ({ messages, pairedUser, randomColor, disconnectAlert }) => {
-  const waitMessage = "Please wait while we connect you with a stranger...";
+  const waitMessage = "Please wait while we connect you with another user...";
 
   const chatBoxRef = useRef();
 
@@ -15,12 +15,12 @@ const Chatbox = ({ messages, pairedUser, randomColor, disconnectAlert }) => {
     <div id="chat-wrapper">
       <p id="disconnect">{disconnectAlert}</p>
       {disconnectAlert ? (
-        <div id="find-a-stranger">
+        <div id="find-a-user">
           <button
             className="green-button"
             onClick={() => window.location.reload()}
           >
-            Find a stranger
+            Find a user
           </button>
         </div>
       ) : (
